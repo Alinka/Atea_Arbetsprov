@@ -20,9 +20,6 @@ namespace WebApplication
             {
                 BulletedList.Items.Add(String.Format("{0:HH:mm}",dataSetMessages.Tables[0].Rows[i]["date_stamp"]) + " - " + dataSetMessages.Tables[0].Rows[i]["message"].ToString());
             }
-
-            //BulletedList.DataSource = dataSetMessages;
-            //BulletedList.DataBind();
         }
     }
 }
