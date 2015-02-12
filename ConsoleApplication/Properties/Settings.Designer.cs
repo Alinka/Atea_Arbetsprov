@@ -26,7 +26,7 @@ namespace ConsoleApplication.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:7437/WebSiteService.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:54663/WebSiteService.asmx")]
         public string ConsoleApplication_WebReference_WebSiteService {
             get {
                 return ((string)(this["ConsoleApplication_WebReference_WebSiteService"]));

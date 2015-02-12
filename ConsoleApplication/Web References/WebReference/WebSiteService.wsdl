@@ -2,7 +2,7 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://localhost/message" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://localhost/message" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://localhost/message">
-      <s:element name="WriteInDb">
+      <s:element name="SendMessage">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime" />
@@ -10,32 +10,69 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="WriteInDbResponse">
+      <s:element name="SendMessageResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="WriteInDbResult" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SendMessageResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadMessage">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReadMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadMessageResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
           </s:sequence>
         </s:complexType>
       </s:element>
     </s:schema>
   </wsdl:types>
-  <wsdl:message name="WriteInDbSoapIn">
-    <wsdl:part name="parameters" element="tns:WriteInDb" />
+  <wsdl:message name="SendMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMessage" />
   </wsdl:message>
-  <wsdl:message name="WriteInDbSoapOut">
-    <wsdl:part name="parameters" element="tns:WriteInDbResponse" />
+  <wsdl:message name="SendMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadMessage" />
+  </wsdl:message>
+  <wsdl:message name="ReadMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadMessageResponse" />
   </wsdl:message>
   <wsdl:portType name="WebSiteServiceSoap">
-    <wsdl:operation name="WriteInDb">
+    <wsdl:operation name="SendMessage">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Save to database</wsdl:documentation>
-      <wsdl:input message="tns:WriteInDbSoapIn" />
-      <wsdl:output message="tns:WriteInDbSoapOut" />
+      <wsdl:input message="tns:SendMessageSoapIn" />
+      <wsdl:output message="tns:SendMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">I came I saw I conquered</wsdl:documentation>
+      <wsdl:input message="tns:ReadMessageSoapIn" />
+      <wsdl:output message="tns:ReadMessageSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WebSiteServiceSoap" type="tns:WebSiteServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="WriteInDb">
-      <soap:operation soapAction="http://localhost/message/WriteInDb" style="document" />
+    <wsdl:operation name="SendMessage">
+      <soap:operation soapAction="http://localhost/message/SendMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadMessage">
+      <soap:operation soapAction="http://localhost/message/ReadMessage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -46,8 +83,17 @@
   </wsdl:binding>
   <wsdl:binding name="WebSiteServiceSoap12" type="tns:WebSiteServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="WriteInDb">
-      <soap12:operation soapAction="http://localhost/message/WriteInDb" style="document" />
+    <wsdl:operation name="SendMessage">
+      <soap12:operation soapAction="http://localhost/message/SendMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadMessage">
+      <soap12:operation soapAction="http://localhost/message/ReadMessage" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -58,10 +104,10 @@
   </wsdl:binding>
   <wsdl:service name="WebSiteService">
     <wsdl:port name="WebSiteServiceSoap" binding="tns:WebSiteServiceSoap">
-      <soap:address location="http://localhost:7437/WebSiteService.asmx" />
+      <soap:address location="http://localhost:54663/WebSiteService.asmx" />
     </wsdl:port>
     <wsdl:port name="WebSiteServiceSoap12" binding="tns:WebSiteServiceSoap12">
-      <soap12:address location="http://localhost:7437/WebSiteService.asmx" />
+      <soap12:address location="http://localhost:54663/WebSiteService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

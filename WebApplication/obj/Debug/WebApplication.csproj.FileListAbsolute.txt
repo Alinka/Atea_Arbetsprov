@@ -2,3 +2,4 @@ D:\Visual Studio\VS Workspace\Atea_Prov\WebApplication\bin\WebApplication.dll
 D:\Visual Studio\VS Workspace\Atea_Prov\WebApplication\bin\WebApplication.pdb
 D:\Visual Studio\VS Workspace\Atea_Prov\WebApplication\obj\Debug\WebApplication.dll
 D:\Visual Studio\VS Workspace\Atea_Prov\WebApplication\obj\Debug\WebApplication.pdb
+D:\Visual Studio\VS Workspace\Atea_Prov\WebApplication\obj\Debug\WebApplication.csprojResolveAssemblyReference.cache

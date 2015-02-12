@@ -20,6 +20,7 @@ namespace ConsoleApplication.WebReference {
     using System.Web.Services.Protocols;
     using System.Xml.Serialization;
     using System.ComponentModel;
+    using System.Data;
     
     
     /// <remarks/>
@@ -29,7 +30,9 @@ namespace ConsoleApplication.WebReference {
     [System.Web.Services.WebServiceBindingAttribute(Name="WebSiteServiceSoap", Namespace="http://localhost/message")]
     public partial class WebSiteService : System.Web.Services.Protocols.SoapHttpClientProtocol {
         
-        private System.Threading.SendOrPostCallback WriteInDbOperationCompleted;
+        private System.Threading.SendOrPostCallback SendMessageOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ReadMessageOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -70,36 +73,66 @@ namespace ConsoleApplication.WebReference {
         }
         
         /// <remarks/>
-        public event WriteInDbCompletedEventHandler WriteInDbCompleted;
+        public event SendMessageCompletedEventHandler SendMessageCompleted;
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://localhost/message/WriteInDb", RequestNamespace="http://localhost/message", ResponseNamespace="http://localhost/message", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string WriteInDb(System.DateTime date, string str) {
-            object[] results = this.Invoke("WriteInDb", new object[] {
+        public event ReadMessageCompletedEventHandler ReadMessageCompleted;
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://localhost/message/SendMessage", RequestNamespace="http://localhost/message", ResponseNamespace="http://localhost/message", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string SendMessage(System.DateTime date, string str) {
+            object[] results = this.Invoke("SendMessage", new object[] {
                         date,
                         str});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void WriteInDbAsync(System.DateTime date, string str) {
-            this.WriteInDbAsync(date, str, null);
+        public void SendMessageAsync(System.DateTime date, string str) {
+            this.SendMessageAsync(date, str, null);
         }
         
         /// <remarks/>
-        public void WriteInDbAsync(System.DateTime date, string str, object userState) {
-            if ((this.WriteInDbOperationCompleted == null)) {
-                this.WriteInDbOperationCompleted = new System.Threading.SendOrPostCallback(this.OnWriteInDbOperationCompleted);
+        public void SendMessageAsync(System.DateTime date, string str, object userState) {
+            if ((this.SendMessageOperationCompleted == null)) {
+                this.SendMessageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSendMessageOperationCompleted);
             }
-            this.InvokeAsync("WriteInDb", new object[] {
+            this.InvokeAsync("SendMessage", new object[] {
                         date,
-                        str}, this.WriteInDbOperationCompleted, userState);
+                        str}, this.SendMessageOperationCompleted, userState);
         }
         
-        private void OnWriteInDbOperationCompleted(object arg) {
-            if ((this.WriteInDbCompleted != null)) {
+        private void OnSendMessageOperationCompleted(object arg) {
+            if ((this.SendMessageCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.WriteInDbCompleted(this, new WriteInDbCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+                this.SendMessageCompleted(this, new SendMessageCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://localhost/message/ReadMessage", RequestNamespace="http://localhost/message", ResponseNamespace="http://localhost/message", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public System.Data.DataSet ReadMessage() {
+            object[] results = this.Invoke("ReadMessage", new object[0]);
+            return ((System.Data.DataSet)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ReadMessageAsync() {
+            this.ReadMessageAsync(null);
+        }
+        
+        /// <remarks/>
+        public void ReadMessageAsync(object userState) {
+            if ((this.ReadMessageOperationCompleted == null)) {
+                this.ReadMessageOperationCompleted = new System.Threading.SendOrPostCallback(this.OnReadMessageOperationCompleted);
+            }
+            this.InvokeAsync("ReadMessage", new object[0], this.ReadMessageOperationCompleted, userState);
+        }
+        
+        private void OnReadMessageOperationCompleted(object arg) {
+            if ((this.ReadMessageCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ReadMessageCompleted(this, new ReadMessageCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -124,17 +157,17 @@ namespace ConsoleApplication.WebReference {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.18408")]
-    public delegate void WriteInDbCompletedEventHandler(object sender, WriteInDbCompletedEventArgs e);
+    public delegate void SendMessageCompletedEventHandler(object sender, SendMessageCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.18408")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class WriteInDbCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class SendMessageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        internal WriteInDbCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        internal SendMessageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -144,6 +177,32 @@ namespace ConsoleApplication.WebReference {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.18408")]
+    public delegate void ReadMessageCompletedEventHandler(object sender, ReadMessageCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.18408")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ReadMessageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ReadMessageCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public System.Data.DataSet Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((System.Data.DataSet)(this.results[0]));
             }
         }
     }

@@ -12,14 +12,20 @@ namespace WebApplication
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataSet dataSetMessages = new DataSet();
-            WebSiteService service = new WebSiteService();
-            dataSetMessages = service.Read();
-
-            for (int i = 0; i < dataSetMessages.Tables["Messages"].Rows.Count; i++)
+            using (WebSiteService service = new WebSiteService())
             {
-                BulletedList.Items.Add(String.Format("{0:HH:mm}",dataSetMessages.Tables[0].Rows[i]["date_stamp"]) + " - " + dataSetMessages.Tables[0].Rows[i]["message"].ToString());
+                //Fill the DataSet
+                using (DataSet dataSetMessages = service.ReadMessage())
+                {
+                    //Loop through the DataSet
+                    foreach (DataRow row in dataSetMessages.Tables["Messages"].Rows)
+                    {
+                        //Retrieve data from DataSet, format it and add it to the bullet list
+                        BulletedList.Items.Add(String.Format("{0:HH:mm}", row["date_stamp"]) + " - " + row["message"].ToString());
+                    }
+                }
             }
+            
         }
     }
 }

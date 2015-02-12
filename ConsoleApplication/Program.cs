@@ -11,20 +11,26 @@ namespace ConsoleApplication
         static void Main(string[] args)
         {
             WebReference.WebSiteService service = new WebReference.WebSiteService();
-
             string msg;
-            DateTime timeStamp = new DateTime();
-
-            Console.WriteLine("Type Message:");
-
-            msg = Console.ReadLine();
-            timeStamp = DateTime.Now;
-
-            Console.WriteLine(service.WriteInDb(timeStamp, msg));
-
-           
+            DateTime date = new DateTime();
+            if (args.Length > 0)
+            {
+                msg = String.Concat(args, ' ');
+                date = DateTime.Now;
+                Console.WriteLine(date);
+                Console.WriteLine(service.SendMessage(date, msg));
+                return;
+            }
             
-            Console.ReadLine();
+            //Loop untill empty message is recieved
+            while (1 == 1)
+            {
+                Console.WriteLine("Type Message (Press 'Enter' to close the application):");
+                msg = Console.ReadLine();
+                if (String.IsNullOrEmpty(msg)) return;
+                date = DateTime.Now;
+                Console.WriteLine(service.SendMessage(date, msg));
+            }
         }
     }
 }

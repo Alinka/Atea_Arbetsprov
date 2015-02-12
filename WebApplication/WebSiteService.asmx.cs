@@ -20,59 +20,18 @@ namespace WebApplication
     // [System.Web.Script.Services.ScriptService]
     public class WebSiteService : System.Web.Services.WebService
     {
-        
-        public SqlCeConnection connection = new SqlCeConnection(@"Data Source = D:\Visual Studio\VS Workspace\Atea_Prov\WebApplication\App_Data\Messages.sdf; Persist Security Info=False;");
-            
+        public DBAdapter dba = new DBAdapter();
+
         [WebMethod(Description = "Save to database")]
-        public void WriteInDb(DateTime date, string str)
+        public string SendMessage(DateTime date, string str)
         {
-            string inserQry = "INSERT INTO message_list(date_stamp, message)VALUES('" + date + "', @msg)";
-            try
-            {
-                connection.Open();
-                SqlCeCommand cmd = connection.CreateCommand();
-                cmd.CommandText = inserQry;
-                cmd.Parameters.AddWithValue("@msg", str);
-                cmd.ExecuteNonQuery();
-                
-            }
-            catch (SqlCeException ex)
-            {
-                ex.ToString();
-            }
-            finally
-            {
-                connection.Close();
-            }
+            return dba.Write(date, str);
         }
-
+       
         [WebMethod(Description = "I came I saw I conquered")]
-        public DataSet Read()
+        public DataSet ReadMessage()
         {
-            SqlCeDataAdapter adapter = new SqlCeDataAdapter();
-            string selectQry = "SELECT date_stamp, message FROM message_list ORDER BY date_stamp DESC";
-            DataSet dataMessages = new DataSet();
-
-            try
-            {
-                connection.Open();
-                SqlCeCommand cmd = connection.CreateCommand();
-                cmd.CommandText = selectQry;
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dataMessages, "Messages");
-                return dataMessages;
-
-            }
-            catch (SqlCeException ex)
-            {
-                System.Web.HttpContext.Current.Response.Write(ex.Message);
-                return null;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            //return "Veni Vidi Vici";
+            return dba.Read();
         }
     }
 }
