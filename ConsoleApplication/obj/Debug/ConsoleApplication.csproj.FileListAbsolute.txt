@@ -3,3 +3,4 @@ D:\Visual Studio\VS Workspace\Atea_Prov\ConsoleApplication\bin\Debug\ConsoleAppl
 D:\Visual Studio\VS Workspace\Atea_Prov\ConsoleApplication\bin\Debug\ConsoleApplication.pdb
 D:\Visual Studio\VS Workspace\Atea_Prov\ConsoleApplication\obj\Debug\ConsoleApplication.exe
 D:\Visual Studio\VS Workspace\Atea_Prov\ConsoleApplication\obj\Debug\ConsoleApplication.pdb
+D:\Visual Studio\VS Workspace\Atea_Prov\ConsoleApplication\obj\Debug\ConsoleApplication.csprojResolveAssemblyReference.cache

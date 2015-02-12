@@ -28,7 +28,7 @@ namespace WebApplication
             return dba.Write(date, str);
         }
        
-        [WebMethod(Description = "I came I saw I conquered")]
+        [WebMethod(Description = "Read from database")]
         public DataSet ReadMessage()
         {
             return dba.Read();

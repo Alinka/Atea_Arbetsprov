@@ -17,7 +17,6 @@ namespace ConsoleApplication
             {
                 msg = String.Concat(args, ' ');
                 date = DateTime.Now;
-                Console.WriteLine(date);
                 Console.WriteLine(service.SendMessage(date, msg));
                 return;
             }
@@ -25,7 +24,7 @@ namespace ConsoleApplication
             //Loop untill empty message is recieved
             while (1 == 1)
             {
-                Console.WriteLine("Type Message (Press 'Enter' to close the application):");
+                Console.WriteLine("Type Message (Press 'Enter' to close):");
                 msg = Console.ReadLine();
                 if (String.IsNullOrEmpty(msg)) return;
                 date = DateTime.Now;
